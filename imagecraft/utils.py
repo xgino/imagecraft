@@ -1,13 +1,22 @@
 from PIL import Image
-import os
 
-def convert(path, output_format="PNG", save_path=None):
+def get_image_info(image, verbose=True):
+    info = {
+        "format": image.format,
+        "mode": image.mode,
+        "size": image.size,
+    }
+    if verbose:
+        print("[get_image_info]", info)
+    return info
+
+def bulk_process(images, func, **kwargs):
     """
-    Convert an image to another format (PNG, JPEG, etc.)
+    Apply a function to a list of images.
     """
-    img = Image.open(path).convert("RGB")  # force RGB
-    if save_path is None:
-        base, _ = os.path.splitext(path)
-        save_path = f"{base}.{output_format.lower()}"
-    img.save(save_path, format=output_format.upper())
-    return save_path
+    results = []
+    for idx, img in enumerate(images):
+        if kwargs.get("verbose", False):
+            print(f"[bulk_process] Processing image {idx+1}/{len(images)}")
+        results.append(func(img, **kwargs))
+    return results

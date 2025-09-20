@@ -1,7 +1,7 @@
 # image-magic
 
 📸 A simple, developer-friendly Python package for resizing, cropping, and converting images.  
-Built on top of Pillow, but easier.
+Built on top of Pillow, but easier. ssssssss
 
 ## Features
 - Resize by width, height, or both (auto aspect ratio)

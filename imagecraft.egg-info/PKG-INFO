@@ -1,6 +1,6 @@
 Metadata-Version: 2.4
 Name: imagecraft
-Version: 0.2.0
+Version: 0.2.1
 Summary: Easy image resizing, cropping, and converting for Python and Django projects.
 Author-email: Gin Li <qingge43@gmail.com>
 License: MIT

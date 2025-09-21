@@ -17,3 +17,7 @@ dependencies = ["pillow"]
 [project.urls]
 Homepage = "https://github.com/xgino/imagecraft"
 Documentation = "https://github.com/xgino/imagecraft#readme"
+
+[tool.setuptools.packages.find]
+include = ["imagecraft*"]
+exclude = ["readme_images*"]

@@ -3,7 +3,7 @@ from io import BytesIO
 import os
 
 class ImageUtils:
-    SUPPORTED_FORMATS = ("JPEG", "PNG", "WEBP")
+    SUPPORTED_FORMATS = ("JPEG", "PNG", "WEBP", "TIFF", "BMP", "GIF", "ICO")
 
     def __init__(self, verbose: bool = False):
         self.verbose = verbose
@@ -12,6 +12,7 @@ class ImageUtils:
         if self.verbose:
             print(f"[ImageUtils] {message}")
 
+    @staticmethod
     def validate_image(self, path: str):
         """
         Check if the given file is a valid image. 
@@ -27,6 +28,7 @@ class ImageUtils:
             self._log(f"Validation failed: {e}")
             return False
 
+    @staticmethod
     def load_image(self, path: str):
         """
         Load an image from disk and convert it to RGBA mode. 
@@ -40,6 +42,7 @@ class ImageUtils:
             self._log(f"Load failed: {e}")
             return None
 
+    @staticmethod
     def save_image(self, img, path: str, format="JPEG", quality=85):
         """
         Save a PIL Image to disk with the given format and quality. 
@@ -51,6 +54,7 @@ class ImageUtils:
         except Exception as e:
             self._log(f"Save failed: {e}")
 
+    @staticmethod
     def to_bytes(self, img, format="JPEG", quality=85, verbose=False):
         """
         Convert a PIL Image into an in-memory BytesIO buffer. 
@@ -72,6 +76,7 @@ class ImageUtils:
                 print(f"[to_bytes] Error: {e}")
             return None
 
+    @staticmethod
     def resize_to_square(self, img, size: int):
         """
         Resize and center-crop an image to a perfect square. 
@@ -104,6 +109,7 @@ class ImageUtils:
             self._log(f"Resize square failed: {e}")
             return img
 
+    @staticmethod
     def resize_to_width(self, img, width: int, keep_aspect=True):
         """
         Resize an image to a target width. 
@@ -124,6 +130,7 @@ class ImageUtils:
             self._log(f"Resize width failed: {e}")
             return img
 
+    @staticmethod
     def resize_to_height(self, img, height: int, keep_aspect=True):
         """
         Resize an image to a target height. 
@@ -144,6 +151,7 @@ class ImageUtils:
             self._log(f"Resize height failed: {e}")
             return img
 
+    @staticmethod
     def crop_center(self, img, target_size: tuple):
         """
         Crop the image to a given (width, height) from the center. 
@@ -162,6 +170,7 @@ class ImageUtils:
             self._log(f"Crop center failed: {e}")
             return img
 
+    @staticmethod
     def adjust_sharpness(self, img, factor=1.0):
         """
         Increase or decrease image sharpness. 
@@ -176,6 +185,7 @@ class ImageUtils:
             self._log(f"Sharpness failed: {e}")
             return img
 
+    @staticmethod
     def adjust_brightness(self, img, factor=1.0):
         """
         Increase or decrease image brightness. 
@@ -190,6 +200,7 @@ class ImageUtils:
             self._log(f"Brightness failed: {e}")
             return img
 
+    @staticmethod
     def optimize_for_web(self, img, format="JPEG", quality=95, max_size_kb=None, bg_color=(255,255,255)):
         """
         Save and compress an image optimized for web usage.

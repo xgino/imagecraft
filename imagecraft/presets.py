@@ -6,6 +6,7 @@ class ImagePresets:
         self.utils = ImageUtils(verbose=verbose)
         self.verbose = verbose
 
+    @staticmethod
     def make_profile_image(self, path, size=256):
         """
         Preset: Generate a square, sharp profile image for avatars. 
@@ -19,6 +20,7 @@ class ImagePresets:
         return self.utils.optimize_for_web(img)
     
     # --- SQUARE LOGO ---
+    @staticmethod
     def logo_square(self, path, size=256, sharpness=2.0, format="JPEG"):
         """
         Square logo: logo-only or logo below text.
@@ -36,6 +38,7 @@ class ImagePresets:
 
 
     # --- HORIZONTAL LOGO ---
+    @staticmethod
     def logo_horizontal(self, path, width=512, sharpness=2.0, format="JPEG", height_ratio=0.5):
         """
         Horizontal logo: logo + text (text below optional).
@@ -61,6 +64,7 @@ class ImagePresets:
 
 
     # --- VERTICAL LOGO ---
+    @staticmethod
     def logo_vertical(self, path, height=512, sharpness=2.0, format="JPEG", width_ratio=0.6):
         """
         Vertical logo: logo + text below.
@@ -84,6 +88,7 @@ class ImagePresets:
 
         return self.utils.optimize_for_web(img, format=format, quality=95, bg_color=(255,255,255))
     
+    @staticmethod
     def make_icon(self, path, size=64, sharpness=5.0):
         """
         Preset: Generate a small square icon (e.g., favicon). 
@@ -96,6 +101,7 @@ class ImagePresets:
         img = self.utils.adjust_sharpness(img, sharpness)
         return self.utils.optimize_for_web(img)
 
+    @staticmethod
     def make_thumbnail(self, path, width=400):
         """
         Preset: Generate a small thumbnail for previews. 
@@ -107,6 +113,7 @@ class ImagePresets:
         img = self.utils.resize_to_width(img, width)
         return self.utils.optimize_for_web(img)
 
+    @staticmethod
     def make_poster(self, path, size=(1080, 1920)):
         """
         Preset: Generate a vertical poster (e.g., story format). 
@@ -119,6 +126,7 @@ class ImagePresets:
         img = self.utils.crop_center(img, size)
         return self.utils.optimize_for_web(img)
 
+    @staticmethod
     def make_banner(self, path, size=(1920, 600)):
         """
         Preset: Generate a wide banner (landscape style). 
@@ -131,6 +139,7 @@ class ImagePresets:
         img = self.utils.crop_center(img, size)
         return self.utils.optimize_for_web(img)
 
+    @staticmethod
     def make_cover(self, path, size=(1200, 628)):
         """
         Preset: Generate a social media cover (Facebook, Twitter, etc.). 
@@ -143,6 +152,7 @@ class ImagePresets:
         img = self.utils.crop_center(img, size)
         return self.utils.optimize_for_web(img)
 
+    @staticmethod
     def make_gallery_image(self, path, size=800):
         """
         Preset: Generate a square gallery image. 

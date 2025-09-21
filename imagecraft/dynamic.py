@@ -6,6 +6,7 @@ class ImageDynamic:
         self.utils = ImageUtils(verbose=verbose)
         self.verbose = verbose
 
+    @staticmethod
     def process(self, path, *args, **kwargs):
         """
         Dynamic image processor.  

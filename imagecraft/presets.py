@@ -2,49 +2,52 @@ from PIL import Image, ImageEnhance
 from .utils import ImageUtils
 
 class ImagePresets:
-    def __init__(self, verbose: bool = False):
-        self.utils = ImageUtils(verbose=verbose)
-        self.verbose = verbose
-
     @staticmethod
-    def make_profile_image(self, path, size=256):
+    def make_profile_image(path, size=256, verbose=False):
         """
         Preset: Generate a square, sharp profile image for avatars. 
         Resizes, sharpens slightly, and optimizes for web.
         """
-        img = self.utils.load_image(path)
+        utils = ImageUtils(verbose=verbose)
+
+        img = utils.load_image(path)
         if not img:
             return None
-        img = self.utils.resize_to_square(img, size)
-        img = self.utils.adjust_sharpness(img, 1.2)
-        return self.utils.optimize_for_web(img)
+        img = utils.resize_to_square(img, size)
+        img = utils.adjust_sharpness(img, 1.2)
+        return utils.optimize_for_web(img)
     
     # --- SQUARE LOGO ---
     @staticmethod
-    def logo_square(self, path, size=256, sharpness=2.0, format="JPEG"):
+    def logo_square(path, size=256, sharpness=2.0, format="JPEG", verbose=False):
         """
         Square logo: logo-only or logo below text.
         Crops from center instead of padding, keeps aspect ratio.
         """
-        img = self.utils.load_image(path)
+
+        utils = ImageUtils(verbose=verbose)
+
+        img = utils.load_image(path)
         if not img:
             return None
 
         # Resize and crop center to square
-        img = self.utils.resize_to_square(img, size)
-        img = self.utils.adjust_sharpness(img, sharpness)
+        img = utils.resize_to_square(img, size)
+        img = utils.adjust_sharpness(img, sharpness)
 
-        return self.utils.optimize_for_web(img, format=format, quality=95, bg_color=(255,255,255))
+        return utils.optimize_for_web(img, format=format, quality=95, bg_color=(255,255,255))
 
 
     # --- HORIZONTAL LOGO ---
     @staticmethod
-    def logo_horizontal(self, path, width=512, sharpness=2.0, format="JPEG", height_ratio=0.5):
+    def logo_horizontal(path, width=512, sharpness=2.0, format="JPEG", height_ratio=0.5, verbose=False):
         """
         Horizontal logo: logo + text (text below optional).
         Height auto-scaled by height_ratio, cropped if necessary.
         """
-        img = self.utils.load_image(path)
+        utils = ImageUtils(verbose=verbose)
+
+        img = utils.load_image(path)
         if not img:
             return None
 
@@ -52,25 +55,27 @@ class ImagePresets:
         target_height = int(width * height_ratio)
 
         # Resize by width keeping aspect ratio
-        img = self.utils.resize_to_width(img, width)
-        img = self.utils.adjust_sharpness(img, sharpness)
+        img = utils.resize_to_width(img, width)
+        img = utils.adjust_sharpness(img, sharpness)
 
         # Crop center to target_height if taller
         w, h = img.size
         if h > target_height:
-            img = self.utils.crop_center(img, (w, target_height))
+            img = utils.crop_center(img, (w, target_height))
 
-        return self.utils.optimize_for_web(img, format=format, quality=95, bg_color=(255,255,255))
+        return utils.optimize_for_web(img, format=format, quality=95, bg_color=(255,255,255))
 
 
     # --- VERTICAL LOGO ---
     @staticmethod
-    def logo_vertical(self, path, height=512, sharpness=2.0, format="JPEG", width_ratio=0.6):
+    def logo_vertical(path, height=512, sharpness=2.0, format="JPEG", width_ratio=0.6, verbose=False):
         """
         Vertical logo: logo + text below.
         Width auto-scaled by width_ratio, cropped from center if needed.
         """
-        img = self.utils.load_image(path)
+        utils = ImageUtils(verbose=verbose)
+
+        img = utils.load_image(path)
         if not img:
             return None
 
@@ -78,88 +83,100 @@ class ImagePresets:
         target_width = int(height * width_ratio)
 
         # Resize by height keeping aspect ratio
-        img = self.utils.resize_to_height(img, height)
-        img = self.utils.adjust_sharpness(img, sharpness)
+        img = utils.resize_to_height(img, height)
+        img = utils.adjust_sharpness(img, sharpness)
 
         # Crop center if wider
         w, h = img.size
         if w > target_width:
-            img = self.utils.crop_center(img, (target_width, h))
+            img = utils.crop_center(img, (target_width, h))
 
-        return self.utils.optimize_for_web(img, format=format, quality=95, bg_color=(255,255,255))
+        return utils.optimize_for_web(img, format=format, quality=95, bg_color=(255,255,255))
     
     @staticmethod
-    def make_icon(self, path, size=64, sharpness=5.0):
+    def make_icon(path, size=64, sharpness=5.0, verbose=False):
         """
         Preset: Generate a small square icon (e.g., favicon). 
         Resizes and optimizes for web.
         """
-        img = self.utils.load_image(path)
+        utils = ImageUtils(verbose=verbose)
+
+        img = utils.load_image(path)
         if not img:
             return None
-        img = self.utils.resize_to_square(img, size)
-        img = self.utils.adjust_sharpness(img, sharpness)
-        return self.utils.optimize_for_web(img)
+        img = utils.resize_to_square(img, size)
+        img = utils.adjust_sharpness(img, sharpness)
+        return utils.optimize_for_web(img)
 
     @staticmethod
-    def make_thumbnail(self, path, width=400):
+    def make_thumbnail(path, width=400, verbose=False):
         """
         Preset: Generate a small thumbnail for previews. 
         Resizes to given width, keeps aspect ratio, optimizes for web.
         """
-        img = self.utils.load_image(path)
+        utils = ImageUtils(verbose=verbose)
+
+        img = utils.load_image(path)
         if not img:
             return None
-        img = self.utils.resize_to_width(img, width)
-        return self.utils.optimize_for_web(img)
+        img = utils.resize_to_width(img, width)
+        return utils.optimize_for_web(img)
 
     @staticmethod
-    def make_poster(self, path, size=(1080, 1920)):
+    def make_poster(path, size=(1080, 1920), verbose=False):
         """
         Preset: Generate a vertical poster (e.g., story format). 
         Resizes by height, then center-crops to target aspect ratio.
         """
-        img = self.utils.load_image(path)
+        utils = ImageUtils(verbose=verbose)
+
+        img = utils.load_image(path)
         if not img:
             return None
-        img = self.utils.resize_to_height(img, size[1])
-        img = self.utils.crop_center(img, size)
-        return self.utils.optimize_for_web(img)
+        img = utils.resize_to_height(img, size[1])
+        img = utils.crop_center(img, size)
+        return utils.optimize_for_web(img)
 
     @staticmethod
-    def make_banner(self, path, size=(1920, 600)):
+    def make_banner(path, size=(1920, 600), verbose=False):
         """
         Preset: Generate a wide banner (landscape style). 
         Resizes by width, then crops center to final size.
         """
-        img = self.utils.load_image(path)
+        utils = ImageUtils(verbose=verbose)
+
+        img = utils.load_image(path)
         if not img:
             return None
-        img = self.utils.resize_to_width(img, size[0])
-        img = self.utils.crop_center(img, size)
-        return self.utils.optimize_for_web(img)
+        img = utils.resize_to_width(img, size[0])
+        img = utils.crop_center(img, size)
+        return utils.optimize_for_web(img)
 
     @staticmethod
-    def make_cover(self, path, size=(1200, 628)):
+    def make_cover(path, size=(1200, 628), verbose=False):
         """
         Preset: Generate a social media cover (Facebook, Twitter, etc.). 
         Resizes by width, then crops center to exact size.
         """
-        img = self.utils.load_image(path)
+        utils = ImageUtils(verbose=verbose)
+
+        img = utils.load_image(path)
         if not img:
             return None
-        img = self.utils.resize_to_width(img, size[0])
-        img = self.utils.crop_center(img, size)
-        return self.utils.optimize_for_web(img)
+        img = utils.resize_to_width(img, size[0])
+        img = utils.crop_center(img, size)
+        return utils.optimize_for_web(img)
 
     @staticmethod
-    def make_gallery_image(self, path, size=800):
+    def make_gallery_image(path, size=800, verbose=False):
         """
         Preset: Generate a square gallery image. 
         Resizes, crops square, and optimizes for web.
         """
-        img = self.utils.load_image(path)
+        utils = ImageUtils(verbose=verbose)
+        
+        img = utils.load_image(path)
         if not img:
             return None
-        img = self.utils.resize_to_square(img, size)
-        return self.utils.optimize_for_web(img)
+        img = utils.resize_to_square(img, size)
+        return utils.optimize_for_web(img)

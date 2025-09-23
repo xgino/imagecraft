@@ -11,7 +11,7 @@ class ImageDynamic:
         - Supports adjustments: sharpness, brightness, quality, max_size_kb.  
         Returns final optimized image.
         """
-        utils = ImageUtils(verbose=verbose)
+        utils = ImageUtils()
 
         img = utils.load_image(path)
         if not img:

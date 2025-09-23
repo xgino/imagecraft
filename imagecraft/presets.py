@@ -8,7 +8,7 @@ class ImagePresets:
         Preset: Generate a square, sharp profile image for avatars. 
         Resizes, sharpens slightly, and optimizes for web.
         """
-        utils = ImageUtils(verbose=verbose)
+        utils = ImageUtils()
 
         img = utils.load_image(path)
         if not img:
@@ -25,7 +25,7 @@ class ImagePresets:
         Crops from center instead of padding, keeps aspect ratio.
         """
 
-        utils = ImageUtils(verbose=verbose)
+        utils = ImageUtils()
 
         img = utils.load_image(path)
         if not img:
@@ -45,7 +45,7 @@ class ImagePresets:
         Horizontal logo: logo + text (text below optional).
         Height auto-scaled by height_ratio, cropped if necessary.
         """
-        utils = ImageUtils(verbose=verbose)
+        utils = ImageUtils()
 
         img = utils.load_image(path)
         if not img:
@@ -73,7 +73,7 @@ class ImagePresets:
         Vertical logo: logo + text below.
         Width auto-scaled by width_ratio, cropped from center if needed.
         """
-        utils = ImageUtils(verbose=verbose)
+        utils = ImageUtils()
 
         img = utils.load_image(path)
         if not img:
@@ -99,7 +99,7 @@ class ImagePresets:
         Preset: Generate a small square icon (e.g., favicon). 
         Resizes and optimizes for web.
         """
-        utils = ImageUtils(verbose=verbose)
+        utils = ImageUtils()
 
         img = utils.load_image(path)
         if not img:
@@ -114,7 +114,7 @@ class ImagePresets:
         Preset: Generate a small thumbnail for previews. 
         Resizes to given width, keeps aspect ratio, optimizes for web.
         """
-        utils = ImageUtils(verbose=verbose)
+        utils = ImageUtils()
 
         img = utils.load_image(path)
         if not img:
@@ -128,7 +128,7 @@ class ImagePresets:
         Preset: Generate a vertical poster (e.g., story format). 
         Resizes by height, then center-crops to target aspect ratio.
         """
-        utils = ImageUtils(verbose=verbose)
+        utils = ImageUtils()
 
         img = utils.load_image(path)
         if not img:
@@ -143,7 +143,7 @@ class ImagePresets:
         Preset: Generate a wide banner (landscape style). 
         Resizes by width, then crops center to final size.
         """
-        utils = ImageUtils(verbose=verbose)
+        utils = ImageUtils()
 
         img = utils.load_image(path)
         if not img:
@@ -158,7 +158,7 @@ class ImagePresets:
         Preset: Generate a social media cover (Facebook, Twitter, etc.). 
         Resizes by width, then crops center to exact size.
         """
-        utils = ImageUtils(verbose=verbose)
+        utils = ImageUtils()
 
         img = utils.load_image(path)
         if not img:
@@ -173,8 +173,8 @@ class ImagePresets:
         Preset: Generate a square gallery image. 
         Resizes, crops square, and optimizes for web.
         """
-        utils = ImageUtils(verbose=verbose)
-        
+        utils = ImageUtils()
+
         img = utils.load_image(path)
         if not img:
             return None

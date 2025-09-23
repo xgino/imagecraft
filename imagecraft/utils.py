@@ -5,15 +5,8 @@ import os
 class ImageUtils:
     SUPPORTED_FORMATS = ("JPEG", "PNG", "WEBP", "TIFF", "BMP", "GIF", "ICO")
 
-    def __init__(self, verbose: bool = False):
-        self.verbose = verbose
-
-    def _log(self, message: str):
-        if self.verbose:
-            print(f"[ImageUtils] {message}")
-
     @staticmethod
-    def validate_image(self, path: str):
+    def validate_image(path: str, verbose=False):
         """
         Check if the given file is a valid image. 
         Opens the file with PIL and verifies integrity. 
@@ -22,40 +15,46 @@ class ImageUtils:
         try:
             with Image.open(path) as img:
                 img.verify()
-            self._log(f"Validated image: {path}")
+            if verbose:
+                print(f"Validated image: {path}")
             return True
         except Exception as e:
-            self._log(f"Validation failed: {e}")
+            if verbose:
+                print(f"Validation failed: {e}")
             return False
 
     @staticmethod
-    def load_image(self, path: str):
+    def load_image(path: str, verbose=False):
         """
         Load an image from disk and convert it to RGBA mode. 
         Returns a PIL Image object, or None if loading fails.
         """
         try:
             img = Image.open(path).convert("RGBA")
-            self._log(f"Loaded image: {path}, size={img.size}, mode={img.mode}")
+            if verbose:
+                print(f"Loaded image: {path}, size={img.size}, mode={img.mode}")
             return img
         except Exception as e:
-            self._log(f"Load failed: {e}")
+            if verbose:
+                print(f"Load failed: {e}")
             return None
 
     @staticmethod
-    def save_image(self, img, path: str, format="JPEG", quality=85):
+    def save_image(img, path: str, format="JPEG", quality=85, verbose=False):
         """
         Save a PIL Image to disk with the given format and quality. 
         Automatically optimizes file size. Logs on success or failure.
         """
         try:
             img.save(path, format=format.upper(), quality=quality, optimize=True)
-            self._log(f"Saved {format} at {path} (quality={quality})")
+            if verbose:
+                print(f"Saved {format} at {path} (quality={quality})")
         except Exception as e:
-            self._log(f"Save failed: {e}")
+            if verbose:
+                print(f"Save failed: {e}")
 
     @staticmethod
-    def to_bytes(self, img, format="JPEG", quality=85, verbose=False):
+    def to_bytes(img, format="JPEG", quality=85, verbose=False):
         """
         Convert a PIL Image into an in-memory BytesIO buffer. 
         Useful for APIs, uploads, or sending without writing to disk. 
@@ -77,7 +76,7 @@ class ImageUtils:
             return None
 
     @staticmethod
-    def resize_to_square(self, img, size: int):
+    def resize_to_square(img, size: int, verbose=False):
         """
         Resize and center-crop an image to a perfect square. 
         Maintains aspect ratio and trims edges (no borders added).
@@ -103,14 +102,16 @@ class ImageUtils:
             bottom = top + size
             img = img.crop((left, top, right, bottom))
 
-            self._log(f"Resized & center-cropped to {size}x{size}")
+            if verbose:
+                print(f"Resized & center-cropped to {size}x{size}")
             return img
         except Exception as e:
-            self._log(f"Resize square failed: {e}")
+            if verbose:
+                print(f"Resize square failed: {e}")
             return img
 
     @staticmethod
-    def resize_to_width(self, img, width: int, keep_aspect=True):
+    def resize_to_width(img, width: int, keep_aspect=True, verbose=False):
         """
         Resize an image to a target width. 
         If keep_aspect=True, scales height proportionally. 
@@ -124,14 +125,17 @@ class ImageUtils:
                 img = img.resize((width, new_h))
             else:
                 img = img.resize((width, h))
-            self._log(f"Resized width={width}, keep_aspect={keep_aspect}")
+            
+            if verbose:
+                print(f"Resized width={width}, keep_aspect={keep_aspect}")
             return img
         except Exception as e:
-            self._log(f"Resize width failed: {e}")
+            if verbose:
+                print(f"Resize width failed: {e}")
             return img
 
     @staticmethod
-    def resize_to_height(self, img, height: int, keep_aspect=True):
+    def resize_to_height(img, height: int, keep_aspect=True, verbose=False):
         """
         Resize an image to a target height. 
         If keep_aspect=True, scales width proportionally. 
@@ -145,14 +149,16 @@ class ImageUtils:
                 img = img.resize((new_w, height))
             else:
                 img = img.resize((w, height))
-            self._log(f"Resized height={height}, keep_aspect={keep_aspect}")
+            if verbose:
+                print(f"Resized height={height}, keep_aspect={keep_aspect}")
             return img
         except Exception as e:
-            self._log(f"Resize height failed: {e}")
+            if verbose:
+                print(f"Resize height failed: {e}")
             return img
 
     @staticmethod
-    def crop_center(self, img, target_size: tuple):
+    def crop_center(img, target_size: tuple, verbose=False):
         """
         Crop the image to a given (width, height) from the center. 
         Useful for posters, banners, covers where exact size is required.
@@ -164,14 +170,16 @@ class ImageUtils:
             left = (w - tw) // 2
             top = (h - th) // 2
             img = img.crop((left, top, left + tw, top + th))
-            self._log(f"Cropped center to {target_size}")
+            if verbose:
+                print(f"Cropped center to {target_size}")
             return img
         except Exception as e:
-            self._log(f"Crop center failed: {e}")
+            if verbose:
+                print(f"Crop center failed: {e}")
             return img
 
     @staticmethod
-    def adjust_sharpness(self, img, factor=1.0):
+    def adjust_sharpness(img, factor=1.0, verbose=False):
         """
         Increase or decrease image sharpness. 
         factor > 1.0 makes it sharper, factor < 1.0 makes it blurrier.
@@ -179,14 +187,16 @@ class ImageUtils:
         try:
             enhancer = ImageEnhance.Sharpness(img)
             img = enhancer.enhance(factor)
-            self._log(f"Adjusted sharpness factor={factor}")
+            if verbose:
+                print(f"Adjusted sharpness factor={factor}")
             return img
         except Exception as e:
-            self._log(f"Sharpness failed: {e}")
+            if verbose:
+                print(f"Sharpness failed: {e}")
             return img
 
     @staticmethod
-    def adjust_brightness(self, img, factor=1.0):
+    def adjust_brightness(img, factor=1.0, verbose=False):
         """
         Increase or decrease image brightness. 
         factor > 1.0 makes it brighter, factor < 1.0 makes it darker.
@@ -194,14 +204,16 @@ class ImageUtils:
         try:
             enhancer = ImageEnhance.Brightness(img)
             img = enhancer.enhance(factor)
-            self._log(f"Adjusted brightness factor={factor}")
+            if verbose:
+                print(f"Adjusted brightness factor={factor}")
             return img
         except Exception as e:
-            self._log(f"Brightness failed: {e}")
+            if verbose:
+                print(f"Brightness failed: {e}")
             return img
 
     @staticmethod
-    def optimize_for_web(self, img, format="JPEG", quality=95, max_size_kb=None, bg_color=(255,255,255)):
+    def optimize_for_web(img, format="JPEG", quality=95, max_size_kb=None, bg_color=(255,255,255), verbose=False):
         """
         Save and compress an image optimized for web usage.
         - If format=JPEG and image has alpha, flatten with bg_color (default white)
@@ -228,9 +240,11 @@ class ImageUtils:
                 buffer = BytesIO()
                 save_img.save(buffer, format=format.upper(), quality=quality, optimize=True)
 
-            self._log(f"Optimized web format={format}, quality={quality}, size={int(size_kb)}KB")
+            if verbose:
+                print(f"Optimized web format={format}, quality={quality}, size={int(size_kb)}KB")
             buffer.seek(0)
             return Image.open(buffer)
         except Exception as e:
-            self._log(f"Web optimization failed: {e}")
+            if verbose:
+                print(f"Web optimization failed: {e}")
             return img

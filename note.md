@@ -1,5 +1,5 @@
-git tag v0.2.2  
-git push origin v0.2.2 
+git tag v0.2.2
+git push origin v0.2.2
 
 git add -A
 git commit -m "release: v0.2.2"
@@ -8,7 +8,7 @@ git push
 
 rm -rf dist build *.egg-info
 pip install build twine
-python -m build  
+python -m build
 
-twine upload dist/*        
+twine upload dist/*
 insert API in CLI
